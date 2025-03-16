@@ -15,11 +15,10 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
-
-COPY . .
+RUN npm ci --only=production
 RUN npm install -g @nestjs/cli
 
+COPY . .
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000

@@ -6,10 +6,25 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
     volumes:
       - .:/app
       - /app/node_modules
+    depends_on:
+      - postgres
     restart: unless-stopped 
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data: 
