@@ -46,10 +46,6 @@ export class JobsController {
   }
 
   @Patch(':id')
-  @UsePipes(new ParseIntPipe({ 
-    errorHttpStatusCode: 400,
-    exceptionFactory: () => new BadRequestException('L\'ID doit être un nombre entier valide')
-  }))
   @UsePipes(new ValidationPipe({
     transform: true,
     whitelist: true,
@@ -57,7 +53,10 @@ export class JobsController {
     errorHttpStatusCode: 400
   }))
   async update(
-    @Param('id') id: number,
+    @Param('id', new ParseIntPipe({ 
+      errorHttpStatusCode: 400,
+      exceptionFactory: () => new BadRequestException('L\'ID doit être un nombre entier valide')
+    })) id: number,
     @Body() updateJobDto: UpdateJobDto,
   ): Promise<Job> {
     try {
