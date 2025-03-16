@@ -31,7 +31,7 @@ export class JobsController {
   @Get(':id')
   @UsePipes(new ParseIntPipe({ 
     errorHttpStatusCode: 400,
-    exceptionFactory: () => new BadRequestException('L\'ID doit être un nombre entier valide')
+    exceptionFactory: () => new BadRequestException('ID must be a valid integer')
   }))
   async findOne(@Param('id') id: number): Promise<Job> {
     try {
@@ -39,9 +39,9 @@ export class JobsController {
       return job;
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw new NotFoundException(`Le job avec l'ID ${id} n'a pas été trouvé`);
+        throw new NotFoundException(`Job with ID ${id} not found`);
       }
-      throw new BadRequestException('Une erreur est survenue lors de la recherche du job');
+      throw new BadRequestException('An error occurred while searching for the job');
     }
   }
 
@@ -55,30 +55,33 @@ export class JobsController {
   async update(
     @Param('id', new ParseIntPipe({ 
       errorHttpStatusCode: 400,
-      exceptionFactory: () => new BadRequestException('L\'ID doit être un nombre entier valide')
+      exceptionFactory: () => new BadRequestException('ID must be a valid integer')
     })) id: number,
     @Body() updateJobDto: UpdateJobDto,
   ): Promise<Job> {
     try {
       if (Object.keys(updateJobDto).length === 0) {
-        throw new BadRequestException('Aucune donnée fournie pour la mise à jour');
+        throw new BadRequestException('No data provided for update');
       }
       
       const job = await this.jobsService.update(id, updateJobDto);
       return job;
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw new NotFoundException(`Le job avec l'ID ${id} n'a pas été trouvé`);
+        throw new NotFoundException(`Job with ID ${id} not found`);
       }
       if (error instanceof BadRequestException) {
         throw error;
       }
-      throw new BadRequestException('Une erreur est survenue lors de la mise à jour du job');
+      throw new BadRequestException('An error occurred while updating the job');
     }
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  remove(@Param('id', new  ParseIntPipe({
+    errorHttpStatusCode: 400,
+    exceptionFactory: () => new BadRequestException('Id must be a valid integer')
+  })) id: number): Promise<void> {
     return this.jobsService.remove(id);
   }
 }
