@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JobsModule } from './jobs/jobs.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { Job } from './jobs/entities/job.entity';
 
 @Module({
   imports: [
@@ -17,12 +21,14 @@ import { JobsModule } from './jobs/jobs.module';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: configService.get('NODE_ENV') !== 'production',
+        entities: [User, Job],
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),
     JobsModule,
+    AuthModule,
+    UsersModule,
   ]
 })
 export class AppModule {}
