@@ -1,98 +1,153 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# JobTracker Backend
 
 ## Description
+JobTracker est une application backend développée avec NestJS qui permet aux utilisateurs de suivre leurs candidatures et le processus de recherche d'emploi. L'application offre des fonctionnalités d'authentification sécurisée et de gestion des offres d'emploi.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technologies Utilisées
+- [NestJS](https://nestjs.com/) - Framework Node.js pour la construction d'applications serveur
+- [TypeORM](https://typeorm.io/) - ORM pour la gestion de la base de données
+- [PostgreSQL](https://www.postgresql.org/) - Base de données relationnelle
+- [Docker](https://www.docker.com/) - Conteneurisation
+- [JWT](https://jwt.io/) - Authentification
+- [Jest](https://jestjs.io/) - Tests unitaires et d'intégration
 
-## Project setup
+## Prérequis
+- Docker (v20.10 ou supérieur)
+- Docker Compose (v2.0 ou supérieur)
 
+## Installation et Démarrage
+
+1. Cloner le repository :
 ```bash
-$ npm install
+git clone https://github.com/votre-username/jobtracker-backend.git
+cd jobtracker-backend
 ```
 
-## Compile and run the project
-
+2. Configurer les variables d'environnement :
 ```bash
-# development
-$ npm run start
+cp .env.example .env
+```
+Remplir les variables dans le fichier `.env` avec vos valeurs.
 
-# watch mode
-$ npm run start:dev
+3. Construire et démarrer les conteneurs :
+```bash
+# Construire les images
+docker compose build
 
-# production mode
-$ npm run start:prod
+# Démarrer les conteneurs en arrière-plan
+docker compose up -d
 ```
 
-## Run tests
-
+4. Vérifier que les conteneurs sont en cours d'exécution :
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker compose ps
 ```
 
-## Deployment
+## Commandes Docker Utiles
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Gestion des Conteneurs
 ```bash
-$ npm install -g mau
-$ mau deploy
+# Démarrer les conteneurs
+docker compose up -d
+
+# Arrêter les conteneurs
+docker compose down
+
+# Voir les logs
+docker compose logs -f
+
+# Reconstruire et redémarrer les conteneurs
+docker compose up -d --build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Exécution des Commandes dans le Conteneur
+```bash
+# Accéder au shell du conteneur
+docker compose exec app sh
 
-## Resources
+# Exécuter les tests
+docker compose exec app npm run test
 
-Check out a few resources that may come in handy when working with NestJS:
+# Générer une migration
+docker compose exec app npm run typeorm migration:generate -- -n NomDeLaMigration
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Exécuter les migrations
+docker compose exec app npm run typeorm migration:run
+```
 
-## Support
+## Structure du Projet
+```
+src/
+├── auth/                 # Module d'authentification
+├── users/               # Module de gestion des utilisateurs
+├── jobs/                # Module de gestion des offres d'emploi
+├── config/              # Configuration de l'application
+└── main.ts             # Point d'entrée de l'application
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## API Endpoints
 
-## Stay in touch
+### Authentification
+- `POST /auth/register` - Inscription d'un nouvel utilisateur
+- `POST /auth/login` - Connexion utilisateur
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Utilisateurs
+- `GET /users/profile` - Récupérer le profil de l'utilisateur connecté
 
-## License
+### Jobs
+- `POST /jobs` - Créer une nouvelle offre d'emploi
+- `GET /jobs` - Récupérer toutes les offres d'emploi
+- `GET /jobs/:id` - Récupérer une offre d'emploi spécifique
+- `PATCH /jobs/:id` - Mettre à jour une offre d'emploi
+- `DELETE /jobs/:id` - Supprimer une offre d'emploi
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Tests
+L'application utilise Jest pour les tests unitaires et d'intégration.
+
+### Lancer les tests
+```bash
+# Lancer tous les tests
+docker compose exec app npm run test
+
+# Lancer les tests en mode watch
+docker compose exec app npm run test:watch
+
+# Lancer les tests avec couverture
+docker compose exec app npm run test:cov
+```
+
+## Base de Données
+La base de données PostgreSQL est gérée via Docker. Les migrations sont gérées avec TypeORM.
+
+### Migrations
+```bash
+# Générer une migration
+docker compose exec app npm run typeorm migration:generate -- -n NomDeLaMigration
+
+# Exécuter les migrations
+docker compose exec app npm run typeorm migration:run
+
+# Annuler la dernière migration
+docker compose exec app npm run typeorm migration:revert
+```
+
+## Sécurité
+- Authentification JWT
+- Hachage des mots de passe avec bcrypt
+- Validation des données avec class-validator
+- Protection des routes avec Guards
+
+## Contribution
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. Commit vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
+
+## Licence
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## Contact
+Votre Nom - [@votre_twitter](https://twitter.com/votre_twitter) - email@example.com
+
+Lien du projet : [https://github.com/votre-username/jobtracker-backend](https://github.com/votre-username/jobtracker-backend)
