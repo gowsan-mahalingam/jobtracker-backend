@@ -144,10 +144,5 @@ docker compose exec app npm run typeorm migration:revert
 4. Push vers la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrir une Pull Request
 
-## Licence
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## Contact
-Votre Nom - [@votre_twitter](https://twitter.com/votre_twitter) - email@example.com
-
-Lien du projet : [https://github.com/votre-username/jobtracker-backend](https://github.com/votre-username/jobtracker-backend)
+Lien du projet : [https://github.com/gowsan-mahalingam/jobtracker-backend](https://github.com/gowsan-mahalingam/jobtracker-backend)
